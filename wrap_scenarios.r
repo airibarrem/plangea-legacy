@@ -18,9 +18,12 @@
 #library('bit')
 
 # Target scenarios (sct) #######################################################
+tgt.mod = 0.15
+if (exists('tgt.mod.generalized')){tgt.mod = tgt.mod.generalized}
+
 rest.area = list(BONN=1.5e6, NYDC=3.5e6, CTRY=13.3719e6,
-                 CBD = 0.15*sum((prop.crop + prop.cultg)*A),
-                 CBD2 = 0.30*sum((prop.crop + prop.cultg)*A),
+                 CBD = tgt.mod*sum((prop.crop + prop.cultg)*A),
+                 CBD2 = 2*tgt.mod*sum((prop.crop + prop.cultg)*A),
                  WRLD = sum((prop.crop + prop.cultg)*A))
 
 # Load large country.coefs matrix only if needed
@@ -28,7 +31,7 @@ country.coefs = c()
 if (2 %in% ublim.cty.range){
   load(paste0(dir,'country.coefs.RData'))
   world.csv = read.csv(paste0(dir, 'countries-code.csv'))
-  }
+}
 
 # Contraint equation coefficients
 constr.list = list(unconstrained = matrix(g_scalar_area, nrow=1, ncol=np),
@@ -43,28 +46,29 @@ ctry.lims = ctry.lims[-length(ctry.lims[,1]),c(1,length(ctry.lims[1,]))]
 # Correcting country limits units from ha to sq.km
 ctry.lims$total =  ctry.lims$total / 100 
 
-if (econ.ctrylim){ctry.lims$total = econ.ctrylims$SQKM}
+if(!exists('ub.perc.constraint')){ub.perc.constraint=1}
+if (econ.ctrylim){ctry.lims$total = econ.ctrylims$SQKM * ub.perc.constraint}
 
 # Builds country limits depending on flat.ctrylim from wrap_optimisation
 if (exists('flat.ctrylim')){ctry.lims$total = flat.ctrylim * ctry.lims$total}
-  #ctry.lims$total = sapply(world.csv$CODE, function(x){flat.ctrylim * sum(country.coefs[x,] * (gap.agr*prop.crop + gap.grs*prop.cultg) * A)})
+#ctry.lims$total = sapply(world.csv$CODE, function(x){flat.ctrylim * sum(country.coefs[x,] * (gap.agr*prop.crop + gap.grs*prop.cultg) * A)})
 #} else {
-  # Computing overall sparable land vs demanded land
+# Computing overall sparable land vs demanded land
 #  dem.lnd = sum(ctry.lims$total[ctry.lims$total>0])
 #  spa.lnd = sum(ctry.lims$total[ctry.lims$total<=0])
-  
-  # Correcting limits to restoration to account for compensation of demanded area
+
+# Correcting limits to restoration to account for compensation of demanded area
 #  ctry.lims$total[ctry.lims$total>0] = 0
 #  ctry.lims$total = ctry.lims$total * ((dem.lnd+spa.lnd)/spa.lnd)
 #  ctry.lims$total = -ctry.lims$total
 #  
-  # Correcting country limits units from ha to sq.km
+# Correcting country limits units from ha to sq.km
 #  ctry.lims$total =  ctry.lims$total / 100 
 #}
 
 # Constrained-scenario (scc) suffix
 suffix.list = list(unconstrained = "", country.limits = "")
-                   #country.limits = "_ctrylim")
+#country.limits = "_ctrylim")
 
 # Benchmarking scenarios (scb) #################################################
 slist.names = list("scen_cb-oc", "scen_cb", "scen_bd-oc", "scen_bd",
@@ -138,7 +142,7 @@ for (sct in sct.range){
       rhs.list = list(unconstrained = restoration.rhs,
                       country.limits = c((ctry.lims$total / A) * g_scalar_area,
                                          restoration.rhs))
-
+      
       slist.names = lapply(slist.names, function(x){paste0(x,suffix.list[scc])})
       constr = constr.list[scc][[1]]
       

@@ -106,7 +106,9 @@ test.objective.function <- function(){
 }
 
 
-# important to implement this as a function because there is good potential for speed-up with this code and we do not want to have to change this many times in optimisation.r
+# important to implement this as a function because there is good potential for 
+# speed-up with this code and we do not want to have to change this many times
+# in optimisation.r
 # also, this is some of the code that is easiest to mess up
 calc.bd <- function(slp){
   bd <- rep(0, np)
