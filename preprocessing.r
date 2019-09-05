@@ -1580,6 +1580,3 @@ save(econ.ctrylims, file=paste0(dir, 'econ.ctrylims.RData'))
 # # scp countries-code.tif 10.12.193.171:/home/hbeyer/Documents/proj/iis_global_spp/
 # 
 # 
-
-
-

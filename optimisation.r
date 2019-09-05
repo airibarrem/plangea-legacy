@@ -237,7 +237,8 @@ load(paste0(dir, "terrestrial_lands.RData"))
 # upper bound cannot exceed area available for restoration:
 ub = (gap.agr * prop.crop + gap.grs * prop.cultg) * ub.perc.constraint
 
-
+# ub per hectare of restorable area
+# ub.per.area = ub / (prop.crop + prop.cultg)
 
 ### PARAMETER DEFINITIONS
 # number of cores to use in parallel processing
@@ -247,7 +248,7 @@ ncores <- 4
 ### CAUTION: important to reset oc after running the postprocessing code, so we just reset it
 # here to be safe:
 oc <- (prop.crop / (prop.crop + prop.cultg)) * occ + (prop.cultg / (prop.crop + prop.cultg)) * ocg 
-oc <- oc * g_scalar_oc
+oc <- oc * g_scalar_oc 
 
 
 ### run all the scenarios:
