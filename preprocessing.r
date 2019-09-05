@@ -25,17 +25,17 @@ library(raster)
 # set folder into which all pre-processed datasets will be written or
 # overwritten if they already exist, must end with a /, and must already exist
 # on disk
-dir = 'inputdata_v8/'
+dir = '/dados/inputdata_v9/'
 if (!dir.exists(dir)) dir.create(dir)
 
-setwd('~/Documents/IIS_PROJECTS/global_rest_prior/global_rest_priorization/')
+setwd('~/plangea-legacy/')
 
-source("~/Documents/IIS_PROJECTS/plangea-legacy/functions.r")
+source("~/plangea-legacy/functions.r")
 
 ### LOAD BASE RASTERS
 
 # ecoregions
-r.er <- raster('./rawdata/5km/Ecoregions/Ecoregions2017__4.9km_Molweide.tif')
+r.er <- raster('/dados/rawdata-legacy/5km/Ecoregions/Ecoregions2017__4.9km_Molweide.tif')
 
 # set global variable for area of each cell in km^2
 A <- ((res(r.er)[1])^2) / 1E6
@@ -46,95 +46,101 @@ save(A, file=paste0(dir, "A.RData"))
 # senstivity as the filenames regularly change case among versions.
 
 # opportunity cost
-r.occ <- raster("./rawdata/5km/others/opportunity_costs_cropland_4.9km_Molweide.tif")
-r.ocg <- raster("./rawdata/5km/others/opportunity_costs_grassland_4.9km_Molweide.tif")
+r.occ <- raster("/dados/rawdata-legacy/5km/others/opportunity_costs_cropland_4.9km_Molweide.tif")
+r.ocg <- raster("/dados/rawdata-legacy/5km/others/opportunity_costs_grassland_4.9km_Molweide.tif")
 
 # opportunity cost variations under Discount Rate epsilon of 1.e-6
-r.occ.d = raster('./rawdata/5km/others/opportunity_costs_cropland_add-eps-DR_4.9km_Molweide.tif')
-r.ocg.d = raster('./rawdata/5km/others/opportunity_costs_grassland_add-eps-DR_4.9km_Molweide.tif')
+r.occ.d = raster('/dados/rawdata-legacy/5km/others/opportunity_costs_cropland_add-eps-DR_4.9km_Molweide.tif')
+r.ocg.d = raster('/dados/rawdata-legacy/5km/others/opportunity_costs_grassland_add-eps-DR_4.9km_Molweide.tif')
 
 # opportunity cost variations under Discount Rate epsilon of 1.e-6
-r.occ.p = raster('./rawdata/5km/others/eps-varprice-opportunity_costs_cropland_4.9km_Molweide.tif')
-r.ocg.p = raster('./rawdata/5km/others/eps-varprice-opportunity_costs_grassland_4.9km_Molweide.tif')
+r.occ.p = raster('/dados/rawdata-legacy/5km/others/eps-varprice-opportunity_costs_cropland_4.9km_Molweide.tif')
+r.ocg.p = raster('/dados/rawdata-legacy/5km/others/eps-varprice-opportunity_costs_grassland_4.9km_Molweide.tif')
 
 # carbon
 #r.cb <- raster("Erb_et_al_Fig4A_Resampled/ExtDat_Fig4A_gcm_reamostrado.tif")
 #r.cb <- raster("carbon/Soil_C_delta_mollweide_aligned_FINAL.tif")
 #r.cb <- raster("./cb_26May2018/CarbonANDSoilDELTA_Final.tif")
-#r.cb = raster('./rawdata/5km/others/C_DELTA_biomass_SOC30cm_v11.tif')
-r.cb = raster('./rawdata/5km/others/DELTA_C_BiomassSoil30cm_v12.1.tif')
+#r.cb = raster('/dados/rawdata-legacy/5km/others/C_DELTA_biomass_SOC30cm_v11.tif')
+r.cb = raster('/dados/rawdata-legacy/5km/others/DELTA_C_BiomassSoil30cm_v12.1.tif')
 
 # carbon standard-deviation layer
-r.cb.sd = raster('./rawdata/5km/others/C_SD_Biomass_Combined_COMPLETE_v12.1.tif')
+r.cb.sd = raster('/dados/rawdata-legacy/5km/others/C_SD_Biomass_Combined_COMPLETE_v12.1.tif')
 
 # countries
-r.cntry <- raster("./rawdata/5km/others/countries-code.tif")
+r.cntry <- raster("/dados/rawdata-legacy/5km/others/countries-code.tif")
 
 # proportions of landcovers (current)
-r.plc1 <- raster("./rawdata/5km/current_LU/crop_class11_2015_4.9km_Moll.tif")
-r.plc2 <- raster("./rawdata/5km/current_LU/CulGrass_class11_2015_4.9km_Moll.tif")
-r.plc3 <- raster("./rawdata/5km/current_LU/ESA_landuse_300m_2015_forest_media_4.9km_Molweide.tif")
-r.plc4 <- raster("./rawdata/5km/current_LU/ESA_landuse_300m_2015_wetlands_media_4.9km_Molweide.tif")
-r.plc5 <- raster("./rawdata/5km/current_LU/ESA_landuse_300m_2015_desert_media_4.9km_Molweide.tif")
-r.plc6 <- raster("./rawdata/5km/current_LU/NatGrass_2015_4.9km_Moll.tif")
-r.plc7 <- raster("./rawdata/5km/current_LU/ESA_landuse_300m_2015_shrubland_media_4.9km_Molweide.tif")
-r.plc8 <- raster("./rawdata/5km/current_LU/ESA_landuse_300m_2015_ice_media_4.9km_Molweide.tif") +
-  raster("./rawdata/5km/current_LU/ESA_landuse_300m_2015_water_media_4.9km_Molweide.tif") +
-  raster("./rawdata/5km/current_LU/ESA_landuse_300m_2015_urban_media_4.9km_Molweide.tif")
+r.plc1 <- raster("/dados/rawdata-legacy/5km/current_LU/crop_class11_2015_4.9km_Moll.tif")
+r.plc2 <- raster("/dados/rawdata-legacy/5km/current_LU/CulGrass_class11_2015_4.9km_Moll.tif")
+r.plc3 <- raster("/dados/rawdata-legacy/5km/current_LU/ESA_landuse_300m_2015_forest_media_4.9km_Molweide.tif")
+r.plc4 <- raster("/dados/rawdata-legacy/5km/current_LU/ESA_landuse_300m_2015_wetlands_media_4.9km_Molweide.tif")
+r.plc5 <- raster("/dados/rawdata-legacy/5km/current_LU/ESA_landuse_300m_2015_desert_media_4.9km_Molweide.tif")
+r.plc6 <- raster("/dados/rawdata-legacy/5km/current_LU/NatGrass_2015_4.9km_Moll.tif")
+r.plc7 <- raster("/dados/rawdata-legacy/5km/current_LU/ESA_landuse_300m_2015_shrubland_media_4.9km_Molweide.tif")
+r.plc8 <- raster("/dados/rawdata-legacy/5km/current_LU/ESA_landuse_300m_2015_ice_media_4.9km_Molweide.tif") +
+  raster("/dados/rawdata-legacy/5km/current_LU/ESA_landuse_300m_2015_water_media_4.9km_Molweide.tif") +
+  raster("/dados/rawdata-legacy/5km/current_LU/ESA_landuse_300m_2015_urban_media_4.9km_Molweide.tif")
 
 # Generating background and terrestrial-lands maps (need those for plotting functions)
 r.tot = r.plc1 + r.plc2 + r.plc3 + r.plc4 + r.plc5 + r.plc6 + r.plc7 + r.plc8
 r.bg <- (r.tot<0); r.bg[r.bg==1] = NA
 r.tot = r.tot + r.bg
-r.terr = r.tot - raster("./rawdata/5km/current_LU/ESA_landuse_300m_2015_water_media_4.9km_Molweide.tif")
+r.terr = r.tot - raster("/dados/rawdata-legacy/5km/current_LU/ESA_landuse_300m_2015_water_media_4.9km_Molweide.tif")
 
-writeRaster(r.bg, './rawdata/5km/others/background_frame_World_4.9km_Molweide.tif', overwrite=T)
+writeRaster(r.bg, '/dados/rawdata-legacy/5km/others/background_frame_World_4.9km_Molweide.tif', overwrite=T)
 
 
 # Correcting anthropic areas using crop map
 anth.total = r.plc1 + r.plc2
-r.plc1 = raster("./rawdata/5km/current_LU/crop_final.tif")
+r.plc1 = raster("/dados/rawdata-legacy/5km/current_LU/crop_final.tif")
 r.plc2 = anth.total - r.plc1
 
 # proportions of landcovers (original)
-r.oa1 <- raster("./rawdata/5km/original_LC/OA-forest.tif")
-r.oa2 <- raster("./rawdata/5km/original_LC/OA-wetland.tif")
-r.oa3 <- raster("./rawdata/5km/original_LC/OA-desert.tif")
-r.oa4 <- raster("./rawdata/5km/original_LC/OA-grassland.tif")
-r.oa5 <- raster("./rawdata/5km/original_LC/OA-shrubland.tif")
+r.oa1 <- raster("/dados/rawdata-legacy/5km/original_LC/OA-forest.tif")
+r.oa2 <- raster("/dados/rawdata-legacy/5km/original_LC/OA-wetland.tif")
+r.oa3 <- raster("/dados/rawdata-legacy/5km/original_LC/OA-desert.tif")
+r.oa4 <- raster("/dados/rawdata-legacy/5km/original_LC/OA-grassland.tif")
+r.oa5 <- raster("/dados/rawdata-legacy/5km/original_LC/OA-shrubland.tif")
 
-#r.oa1 <- raster("./rawdata/5km/original_LC/min/Area_to_be_restored_forest_min.tif")
-#r.oa2 <- raster("./rawdata/5km/original_LC/min/Area_to_be_restored_wetland_min.tif")
-#r.oa3 <- raster("./rawdata/5km/original_LC/min/Area_to_be_restored_desert_min.tif")
-#r.oa4 <- raster("./rawdata/5km/original_LC/min/Area_to_be_restored_natural_grassland_min.tif")
-#r.oa5 <- raster("./rawdata/5km/original_LC/min/Area_to_be_restored_shrubland_min.tif")
+#r.oa1 <- raster("/dados/rawdata-legacy/5km/original_LC/min/Area_to_be_restored_forest_min.tif")
+#r.oa2 <- raster("/dados/rawdata-legacy/5km/original_LC/min/Area_to_be_restored_wetland_min.tif")
+#r.oa3 <- raster("/dados/rawdata-legacy/5km/original_LC/min/Area_to_be_restored_desert_min.tif")
+#r.oa4 <- raster("/dados/rawdata-legacy/5km/original_LC/min/Area_to_be_restored_natural_grassland_min.tif")
+#r.oa5 <- raster("/dados/rawdata-legacy/5km/original_LC/min/Area_to_be_restored_shrubland_min.tif")
 
 
 # elevation
-r.elev <- raster("./rawdata/5km/others/DEM_World_4.9km_Molweide.tif")
+r.elev <- raster("/dados/rawdata-legacy/5km/others/DEM_World_4.9km_Molweide.tif")
 
 
 
 # make list of species rasters
-spp_dir <- "./rawdata/5km/BD_ranges/raster_mammals"
+spp_dir <- "/dados/rawdata-legacy/5km/BD_ranges/raster_mammals"
 rnames.m <- list.files(spp_dir, full.names=TRUE, pattern = "\\.tif$")
 length(rnames.m)
  
-spp_dir <- "./rawdata/5km/BD_ranges/raster_amphibians"
+spp_dir <- "/dados/rawdata-legacy/5km/BD_ranges/raster_amphibians"
 rnames.a <- list.files(spp_dir, full.names=TRUE, pattern = "\\.tif$")
 length(rnames.a)
  
-spp_dir <- "./rawdata/5km/BD_ranges/raster_birds"
+spp_dir <- "/dados/rawdata-legacy/5km/BD_ranges/raster_birds"
 rnames.b <- list.files(spp_dir, full.names=TRUE, pattern = "\\.tif$")
 length(rnames.b)
 
-# reptiles are not being included...
-# spp_dir <- "./raster_split_reptiles"
-# rnames.r <- list.files(spp_dir, full.names=TRUE)
-# length(rnames.r)
+spp_dir <- "/dados/rawdata-legacy/5km/BD_ranges/raster_reptiles/"
+rnames.r <- list.files(spp_dir, full.names=TRUE, pattern = "\\.tif$")
+length(rnames.r)
 
-spp_raster_names <- c(rnames.m, rnames.b, rnames.a)
-spp_taxon <- c(rep("M", length(rnames.m)), rep("A", length(rnames.a)), rep("B", length(rnames.b)))
+spp_dir <- "/dados/rawdata-legacy/5km/BD_ranges/raster_plants//"
+rnames.p <- list.files(spp_dir, full.names=TRUE, pattern = "\\.tif$")
+length(rnames.p)
+
+
+spp_raster_names <- c(rnames.m, rnames.b, rnames.a, rnames.r, rnames.p)
+spp_taxon <- c(rep("M", length(rnames.m)), rep("A", length(rnames.a)),
+               rep("B", length(rnames.b)), rep("R", length(rnames.r)),
+               rep("P", length(rnames.p)))
 length(spp_raster_names)
 
 
@@ -583,8 +589,8 @@ save(prop.cultg, file=paste0(dir, "prop.cultg.RData"))
 # index is associated with the right data structures.
 
 # load elevation limits data - but note that they are semicolon delimited
-elim.lower <- read.csv("./rawdata/5km/others/TB_LowerElevation_MAB_May2018.csv", sep=";")
-elim.upper <- read.csv("./rawdata/5km/others/TB_UpperElevation_MAB_May2018.csv", sep=";")
+elim.lower <- read.csv("/dados/rawdata-legacy/5km/others/TB_LowerElevation_MAB_May2018.csv", sep=";")
+elim.upper <- read.csv("/dados/rawdata-legacy/5km/others/TB_UpperElevation_MAB_May2018.csv", sep=";")
 head(elim.lower)
 head(elim.upper)
 
@@ -662,7 +668,8 @@ for (i in 1:length(spp_raster_names)){
 save(species_index_list, file=paste0(dir, "species_index_list.RData"))
 save(species_cell_cnt, file=paste0(dir, "species_cell_cnt.RData"))
 
-
+load(paste0(dir, "species_index_list.RData"))
+load(paste0(dir, "species_cell_cnt.RData"))
 
 
 # repeat this for all terrestrial cells for purpose of calculating t0 baseline
@@ -754,8 +761,7 @@ length(species_cell_cnt_terr)
 
 # object.size(species_index_list_rev)
 
-
-load(file=paste0(dir, "species_index_list.RData"))
+#load(file=paste0(dir, "species_index_list.RData"))
 
 
 
@@ -764,7 +770,7 @@ load(file=paste0(dir, "species_index_list.RData"))
 
 ### SPECIES X HABITAT MATRIX AND CONSERVATION STATUS
 
-sphabdf <- read.csv("./rawdata/5km/BD_ranges/Habitats_marginal_excluded_habitats_selected.csv")
+sphabdf <- read.csv("/dados/rawdata-legacy/5km/BD_ranges/Habitats_marginal_excluded_habitats_selected.csv")
 head(sphabdf)
 
 unique(sphabdf$habitat)
@@ -826,6 +832,7 @@ sphabclass <- rep("M", dim(sphabdf)[1])
 sphabclass[which(sphabdf$class_name == "AVES")] <- "B"
 sphabclass[which(sphabdf$class_name == "AMPHIBIA")] <- "A"
 
+
 # just test all spid are unique
 (length(spid) == length(unique(spid)))
 
@@ -835,7 +842,9 @@ for (i in 1:length(spid)){
 
 	if (length(recs) == 0){
 		#message(paste0("No records found for species ID: ", spid[i]))
-		if (!spp_taxon[i] == "R") errors <- c(errors, spid[i])
+		if (spp_taxon[i] %in% c("R", "P")){
+		  sphabm[i,1:5] = 1 # NatureMap: assume plants and reptile ranges work for all natural land covers
+		} else {errors <- c(errors, spid[i])}
 	} else {
 		# encode species category
 		if (sphabdf$category[recs[1]] == "CR") spcat[i] <- 1
@@ -1126,7 +1135,7 @@ summary(rowSums(prop.restore))
 
 # need to fill in NAs here based on ecoregion data
 # r.ernatveg <- raster("./Ecoregion2017_natveg_classification/Ecoregions2017_Eco_valueNames_4.9km_Molweide_reclassificado_ESA.tif")
-r.ernatveg <- raster("./rawdata/5km/Ecoregions/Ecoregions2017__4.9km_Molweide_reclassificado.tif")
+r.ernatveg <- raster("/dados/rawdata-legacy/5km/Ecoregions/Ecoregions2017__4.9km_Molweide_reclassificado.tif")
 
 recs <- which(is.na(rowSums(prop.restore)))
 length(recs)
@@ -1234,7 +1243,7 @@ save(country.coefs, file=paste0(dir, "country.coefs.RData"))
 
 
 # Yield Gaps
-gap.agr = extend(raster('./rawdata/5km/others/areascropcomgap2000_ilhas.tif'),
+gap.agr = extend(raster('/dados/rawdata-legacy/5km/others/areascropcomgap2000_ilhas.tif'),
                  r.terr, value=0)
 
 # According to table of yield ratio from GAEZ
@@ -1248,13 +1257,13 @@ gap.agr[gap.agr==7] = 1 - ((0.85 + 1) / 2)
 
 gap.agr = gap.agr[master_index]
 
-gap.grs = raster('./rawdata/5km/others/yield_gap_grasslands.tif')
+gap.grs = raster('/dados/rawdata-legacy/5km/others/yield_gap_grasslands.tif')
 
 gap.grs = gap.grs[master_index]
 gap.grs[is.na(gap.grs)] = 0
 
-save(gap.agr, file='./inputdata_v8/gap.agr.RData')
-save(gap.grs, file='./inputdata_v8/gap.grs.RData')
+save(gap.agr, file=paste0(dir, 'gap.agr.RData'))
+save(gap.grs, file=paste0(dir, 'gap.grs.RData'))
 
 econ.ub = gap.agr * prop.crop + gap.grs * prop.cultg
 
@@ -1262,7 +1271,7 @@ econ.ctrylims = world.csv
 
 econ.ctrylims$SQKM = sapply(world.csv$CODE, function(x){sum(as.numeric(world.vals==x) * econ.ub * A)})
 
-save(econ.ctrylims, file='./inputdata_v8/econ.ctrylims.RData')
+save(econ.ctrylims, file=paste0(dir, 'econ.ctrylims.RData'))
 
 
 
@@ -1571,6 +1580,3 @@ save(econ.ctrylims, file='./inputdata_v8/econ.ctrylims.RData')
 # # scp countries-code.tif 10.12.193.171:/home/hbeyer/Documents/proj/iis_global_spp/
 # 
 # 
-
-
-
