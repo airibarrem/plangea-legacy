@@ -240,13 +240,13 @@ PrC.relative.var = 0.25
 PrG.relative.var = 0.25
 quad.sd = T
 CL.prt = T
-ub.perc.vals = seq(from=1, to=1, by=0.05)
+ub.perc.vals = seq(from=0, to=1, by=0.05)
 # ub.perc.vals = seq(from=0.15, to=1, by=0.1)
 econ.ub = F
 econ.ctrylim = F
 ublim.cty.range = 1
-target.range = 4
-wgt.range = c(5:6)
+target.range = 6
+wgt.range = 1:10
 
 
 match.flag = F # defines if ub limit should be matched to global limit (T) or not (F)
@@ -264,7 +264,7 @@ if (match.flag){ # Matching ub limit to global (tgt.mod) limit
   write.csv(iter.results, file="./display_results_CBD_v8/ublim-matching-global_combined-results.csv", row.names=F)  
 } else {# Changing global (tgt.mod) limit keeping ub limit equal to 1
   for (tgt.mod.generalized in ub.perc.vals){
-    bench.range = 5 #c(2,4,5,7)
+    bench.range = c(2,4,6) #c(2,4,5,7)
     overwrite.nsteps = 20 #bernardo mudou de 5 p 20
     ublim.suffix = paste0('-global-limit-at_',round(tgt.mod.generalized,2))
     ub.perc.constraint = 1

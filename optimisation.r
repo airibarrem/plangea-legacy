@@ -30,13 +30,13 @@
 library(Rsymphony)
 library(Matrix)
 
-home.dir = '~/Documents/IIS_PROJECTS/plangea-legacy/'
+home.dir = '/home/eduardo/development/r/plangea-legacy/'
 setwd(home.dir)
 
 source("functions.r")
 
 # set the input directory from which to load all the data for the optimisation
-dir <- 'inputdata_v8/'
+dir <- 'inputdata_v9/'
 
 #scp ~/Documents/proj/iis_global_spp/inputdata_v1/species_index_list.RData 10.12.193.171:/home/hbeyer/Documents/proj/iis_global_spp/inputdata_v1/
 

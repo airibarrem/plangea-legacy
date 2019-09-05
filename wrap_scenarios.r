@@ -85,7 +85,7 @@ slist.weights = list(list(w.cb=1,w.bd=1), list(w.cb=1,w.bd=1),
                      list(w.cb=1,w.bd=1), list(w.cb=1,w.bd=1),
                      list(w.cb=c(2,rep(1,9)),
                           w.bd=c(1, 1, 3, 5, 10, 20, 35, 50, 100, 1000)),
-                     list(w.cb=c(2,rep(1,9)),
+                     list(w.cb=c(2, rep(1,9)),
                           w.bd=c(1, 1, 3, 5, 10, 20, 35, 50, 100, 1000)),
                      #
                      #                    list(w.cb=c(rep(1,5)),
